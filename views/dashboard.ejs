@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include("composants/head") %>
+</head>
+<body>
+<header>
+    <%- include("composants/navbar") %>
+</header>
+</body>
+</html>
+
+<main>
+    <aside class="dateToday">
+        <p id="currentDate"></p>
+            <p>Session en cours : 
+                <span id="username">-</span> 
+                (<span id="userEmail">-</span>)
+            </p>
+    </aside>
+
+    <section>
+        <h2>Réservations en cours (<span id="activeReservationsCount">0</span>)</h2>
+
+            <div class="table-container">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Catway N°</th>
+                            <th>Client</th>
+                            <th>Bateau</th>
+                            <th>Début</th>
+                            <th>Fin</th>
+                            <th>Statut</th>
+                        </tr>
+                    </thead>
+                    <tbody id="reservationsTableBody">
+                        <tr>
+                            <td colspan="6" class="text-center">
+                                <div class="loader"></div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+    </section>
+</main>
+
+<script src="/javascripts/dashboard.js"></script>
+<%- include('composants/footer') %>

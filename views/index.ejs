@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <%- include("composants/head") %>
+</head>
+
+<body>
+    <header>
+        <%- include("composants/navbar") %>
+    </header>
+
+    <h1>Port de Plaisance Russell</h1>
+
+    <div class="Presentation">
+        <p>Bienvenue sur l'API pour le Port de Plaisance Russell</p>
+        <p>Cette application permet de gérer les réservations et les utilisateurs de vos Catways </p>
+        <br>
+        <p>Pour en savoir plus, veuillez consulter notre <a href="./documentations.ejs">documentation.</a></p>
+    </div>
+
+
+    <div class="connectPage">
+
+        <form action="post">
+            <legend>Merci de vous connecter</legend>
+
+            <label for="mailConnect">E-mail :</label>
+            <input type="email" name="mailConnect" id="mailConnect" placeholder="Votre mail" required>
+
+            <label for="passwordConnect">Mot de passe :</label>
+            <input type="password" name="passwordConnect" id="passwordConnect" placeholder="Mot de passe" required>
+            <button type="submit">Se connecter</button>
+        </form>
+    </div>
+</body>
+
+</html>

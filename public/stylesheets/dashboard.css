@@ -1,0 +1,45 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+body {
+ background-image: url(../images/page-plaisance-8-1600x900.jpg);
+ background-size: cover;
+}
+
+h2 {
+    color: white;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+section {
+    border: 1px solid white;
+    border-radius: 5px;
+    backdrop-filter: blur(10px);
+    margin: 10px;
+}
+
+.dateToday {
+    width: 20%;
+    justify-items: center;
+    flex-direction: right;
+    border: 1px solid white;
+    border-radius: 5px;
+    backdrop-filter: blur(10px);
+    margin-left: auto;
+    margin-right: 10px;
+    
+}
+
+
+
+
+

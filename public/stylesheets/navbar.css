@@ -1,0 +1,36 @@
+.navBar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    text-transform: uppercase;
+}
+
+.navBar a {
+    text-decoration: none;
+    color: white;
+}
+
+.navRight,
+.navLeft {
+    display: flex;
+    gap: 30px;
+    justify-content: center;
+    align-items: center;
+}
+
+.navRight a {
+    border-left: 1px solid white;
+    padding-left: 10px;
+}
+
+button {
+    border: 1px solid white;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+a:hover {
+    text-decoration: underline;
+    font-weight: bold;
+}
