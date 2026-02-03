@@ -9,30 +9,32 @@
     <header>
         <%- include("composants/navbar") %>
     </header>
-
-    <h1>Port de Plaisance Russell</h1>
-
+<main>
     <div class="Presentation">
         <p>Bienvenue sur l'API pour le Port de Plaisance Russell</p>
         <p>Cette application permet de gérer les réservations et les utilisateurs de vos Catways </p>
         <br>
-        <p>Pour en savoir plus, veuillez consulter notre <a href="./documentations.ejs">documentation.</a></p>
+        <p>Pour en savoir plus, veuillez consulter notre <a href="/documentation">documentation.</a></p>
     </div>
 
 
     <div class="connectPage">
+        <div id="alert-container"></div>
 
-        <form action="post">
+        <form id="loginForm">
             <legend>Merci de vous connecter</legend>
 
-            <label for="mailConnect">E-mail :</label>
-            <input type="email" name="mailConnect" id="mailConnect" placeholder="Votre mail" required>
+            <label for="email">E-mail :</label>
+            <input type="email" name="email" id="email" placeholder="Votre mail" required autocomplete="username">
 
-            <label for="passwordConnect">Mot de passe :</label>
-            <input type="password" name="passwordConnect" id="passwordConnect" placeholder="Mot de passe" required>
+            <label for="password">Mot de passe :</label>
+            <input type="password" name="password" id="password" placeholder="Mot de passe" required autocomplete="current-password">
             <button type="submit">Se connecter</button>
         </form>
     </div>
+</main> 
+
+<script src="/javascripts/login.js"></script>
 </body>
 
 </html>

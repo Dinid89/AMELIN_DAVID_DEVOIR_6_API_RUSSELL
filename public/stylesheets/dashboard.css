@@ -12,6 +12,29 @@ body {
 
 h2 {
     color: white;
+    text-align: center;
+}
+
+aside {
+    color: white;
+    text-align: center;
+    padding: 10px;
+    backdrop-filter: blur(50px);
+    width: 20%;
+    justify-items: center;
+    flex-direction: right;
+    border: 1px solid white;
+    border-radius: 5px;
+    margin-left: auto;
+    margin-right: 10px;
+}
+
+#activeReservationsCount {
+    color: rgb(41, 233, 41);
+}
+
+.colorPoint {
+    color: rgb(8, 243, 8);
 }
 
 main {
@@ -23,21 +46,12 @@ main {
 section {
     border: 1px solid white;
     border-radius: 5px;
-    backdrop-filter: blur(10px);
+    backdrop-filter: blur(50px);
     margin: 10px;
+    padding: 10px;
 }
 
-.dateToday {
-    width: 20%;
-    justify-items: center;
-    flex-direction: right;
-    border: 1px solid white;
-    border-radius: 5px;
-    backdrop-filter: blur(10px);
-    margin-left: auto;
-    margin-right: 10px;
-    
-}
+
 
 
 

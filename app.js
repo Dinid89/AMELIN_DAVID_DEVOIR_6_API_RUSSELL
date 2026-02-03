@@ -14,59 +14,54 @@ mongodb.initClientDbConnection();
 
 const app = express();
 
+// Configuration EJS
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
-app.use(express.static(path.join(__dirname, 'public')));
-
+// Middlewares
 app.use(cors({
     exposedHeaders: ["Authorization"],
     origin: '*'
-}));  
+}));
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/api', apiIndexRouter);
-app.use('/api/login', authRouter);
-app.use('/api/logout', authRouter);
+// Routes API
+app.use('/api', authRouter);
 app.use('/api/users', usersRouter);
 app.use('/api/catways', catwayRouter);
 
-app.get("/", (req, res) => {
-  res.render("index", {
-    title: "Connexion - Port de Plaisance"
-  });
+// Routes des pages EJS
+app.get('/', (req, res) => {
+    res.render('index', { title: 'Connexion - Port de Plaisance Russell' });
 });
 
-app.get("/dashboard", (req, res) => {
-  res.render("dashboard", {
-    title: "Tableau de bord"
-  });
+app.get('/dashboard', (req, res) => {
+    res.render('dashboard', { title: 'Tableau de bord' });
 });
 
-app.get("/catways", (req, res) => {
-  res.render("catways", {
-    title: "Gestion des catways"
-  });
+app.get('/catways', (req, res) => {
+    res.render('catways', { title: 'Gestion des Catways' });
 });
 
-app.get("/reservations", (req, res) => {
-  res.render("reservations", {
-    title: "Gestion des reservations"
-  });
+app.get('/reservations', (req, res) => {
+    res.render('reservations', { title: 'Gestion des Réservations' });
 });
 
-app.get("/users-page", (req, res) => {
-  res.render("users", {
-    title: "Gestion des utilisateurs"
-  });
+app.get('/users-page', (req, res) => {
+    res.render('users-page', { title: 'Gestion des Utilisateurs' });
 });
 
+app.get('/documentation', (req, res) => {
+    res.render('documentation', { title: 'Documentation API' });
+});
 
-app.use(function(req, res, next) {
-  res.status(404).json({name: "API", version: "1.0.0", message: "Endpoint not found"});
+// 404
+app.use(function(req, res) {
+    res.status(404).json({ name: "API Russell Marina", version: "1.0.0", message: "Endpoint not found" });
 });
 
 module.exports = app;

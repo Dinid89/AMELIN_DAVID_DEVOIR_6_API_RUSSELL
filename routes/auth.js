@@ -5,9 +5,10 @@ const User = require('../models/User');
 
 const SECRET_KEY = process.env.SECRET_KEY
 
-router.post('/login', async (req, res) => {
+router.post('/login', async (req, res) => {  
     try {
         const { email, password }  = req.body;
+        console.log("Reqete recue", {email, password});
 
         if (!email || !password) {
             return res.status(400).json({ 
@@ -24,8 +25,9 @@ router.post('/login', async (req, res) => {
                 message: 'email ou mot de passe invalide'
             });
         }
-
+        
         const isPasswordValid = await user.comparePassword(password);
+        console.log("Mot de passe valide", isPasswordValid);
 
         if (!isPasswordValid) {
             return res.status(401).json({ 

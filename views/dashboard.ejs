@@ -1,19 +1,18 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <%- include("composants/head") %>
 </head>
 <body>
-<header>
-    <%- include("composants/navbar") %>
-</header>
-</body>
-</html>
+    <header>
+        <%- include("composants/navbar") %>
+    </header>
 
 <main>
     <aside class="dateToday">
         <p id="currentDate"></p>
-            <p>Session en cours : 
+        <br>
+            <p> <span class="colorPoint">•</span> Session en cours : 
                 <span id="username">-</span> 
                 (<span id="userEmail">-</span>)
             </p>
@@ -47,4 +46,6 @@
 </main>
 
 <script src="/javascripts/dashboard.js"></script>
-<%- include('composants/footer') %>
+</body>
+</html>
+
