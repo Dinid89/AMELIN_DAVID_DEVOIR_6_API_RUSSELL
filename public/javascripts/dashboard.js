@@ -16,7 +16,7 @@ function checkAuth() {
 async function loadCurrentReservations() {
     const token = localStorage.getItem('token');
     const tbody = document.getElementById('reservationsTableBody');
-    
+
     try {
         // Récupérer tous les catways
         const response = await fetch('/api/catways', {
@@ -24,39 +24,44 @@ async function loadCurrentReservations() {
                 'Authorization': `Bearer ${token}`
             }
         });
-        
+
         const data = await response.json();
-        
+
         if (!data.success) {
-            throw new Error('Erreur lors du chargement');
+            throw new Error('Erreur lors du chargement des catways');
         }
-        
-        // Récupérer toutes les réservations en cours
+
         const today = new Date();
+        today.setHours(0,0,0,0); // Ignorer heures, minutes, secondes
         let allReservations = [];
-        
+
+        // Parcours des catways
         for (const catway of data.data) {
             const resResponse = await fetch(`/api/catways/${catway.catwayNumber}/reservations`, {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
             });
-            
+
             const resData = await resResponse.json();
+
             if (resData.success && resData.data) {
                 // Filtrer les réservations en cours
                 const activeReservations = resData.data.filter(res => {
                     const start = new Date(res.startDate);
+                    start.setHours(0,0,0,0);
                     const end = new Date(res.endDate);
+                    end.setHours(0,0,0,0);
                     return today >= start && today <= end;
                 });
+
                 allReservations = allReservations.concat(activeReservations);
             }
         }
-        
+
         // Mettre à jour le compteur
         document.getElementById('activeReservationsCount').textContent = allReservations.length;
-        
+
         // Afficher les réservations
         if (allReservations.length === 0) {
             tbody.innerHTML = '<tr><td colspan="6" class="text-center">Aucune réservation en cours</td></tr>';
@@ -81,6 +86,7 @@ async function loadCurrentReservations() {
         console.error('Erreur:', error);
     }
 }
+
 
 function setupLogout() {
     const logoutBtn = document.getElementById('logoutBtn');
