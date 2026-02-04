@@ -9,15 +9,8 @@
     </header>
 
 <main>
-    <aside class="dateToday">
-        <p id="currentDate"></p>
-        <br>
-            <p> <span class="colorPoint">•</span> Session en cours : 
-                <span id="username">-</span> 
-                (<span id="userEmail">-</span>)
-            </p>
-    </aside>
-
+    <%- include("composants/aside") %>
+    
     <section>
         <h2>Réservations en cours (<span id="activeReservationsCount">0</span>)</h2>
 

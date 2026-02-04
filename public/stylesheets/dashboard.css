@@ -5,36 +5,13 @@
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 
-body {
- background-image: url(../images/page-plaisance-8-1600x900.jpg);
- background-size: cover;
-}
-
 h2 {
     color: white;
     text-align: center;
 }
 
-aside {
-    color: white;
-    text-align: center;
-    padding: 10px;
-    backdrop-filter: blur(50px);
-    width: 20%;
-    justify-items: center;
-    flex-direction: right;
-    border: 1px solid white;
-    border-radius: 5px;
-    margin-left: auto;
-    margin-right: 10px;
-}
-
 #activeReservationsCount {
     color: rgb(41, 233, 41);
-}
-
-.colorPoint {
-    color: rgb(8, 243, 8);
 }
 
 main {

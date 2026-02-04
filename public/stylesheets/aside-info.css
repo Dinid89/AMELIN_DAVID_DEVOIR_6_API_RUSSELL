@@ -1,0 +1,17 @@
+aside {
+    color: white;
+    text-align: center;
+    padding: 10px;
+    backdrop-filter: blur(50px);
+    width: 20%;
+    justify-items: center;
+    flex-direction: right;
+    border: 1px solid white;
+    border-radius: 5px;
+    margin-left: auto;
+    margin-right: 10px;
+}
+
+.colorPoint {
+    color: rgb(8, 243, 8);
+}
