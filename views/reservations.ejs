@@ -13,6 +13,81 @@
     <main>
         <%- include("composants/aside") %>
 
+            <section>
+                <div class="section-header">
+                    <h2>Gestion des Réservations</h2>
+                    <br>
+                    <button id="btnAddReservation">Ajouter une réservation</button>
+                </div>  
+
+                <div id="alert-container"></div>
+
+                <!-- Formulaire d'ajout/modification -->
+                <div id="formContainer" class="form-card" style="display: none;">
+                    <h3 id="formTitle">Ajouter une réservation</h3>
+                    <form id="reservationForm">
+                        <input type="hidden" id="reservationId">
+                        <input type="hidden" id="oldCatwayNumber">
+
+                        <div class="form-group">
+                            <label for="catwayNumber">Catway N° *</label>
+                            <select id="catwayNumber" required>
+                                <option value="">-- Choisir un catway --</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="clientName">Nom du client *</label>
+                            <input type="text" id="clientName" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="boatName">Nom du bateau *</label>
+                            <input type="text" id="boatName" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="startDate">Date de début *</label>
+                            <input type="date" id="startDate" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="endDate">Date de fin *</label>
+                            <input type="date" id="endDate" required>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary">💾 Enregistrer</button>
+                            <button type="button" class="btn btn-secondary" id="btnCancelForm">❌ Annuler</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Liste des réservations -->
+                <div class="table-container">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Catway N°</th>
+                                <th>Client</th>
+                                <th>Bateau</th>
+                                <th>Date début</th>
+                                <th>Date fin</th>
+                                <th>Statut</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="reservationsTableBody">
+                            <tr>
+                                <td colspan="7" class="text-center">Chargement...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+    </main>
+
+    <script src="/javascripts/reservations.js"></script>
 </body>
 
 </html>

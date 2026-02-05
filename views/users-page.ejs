@@ -13,6 +13,66 @@
     <main>
         <%- include("composants/aside") %>
 
+            <section>
+                <div class="section-header">
+                    <h2>Gestion des Utilisateurs</h2>
+                    <br>
+                    <button class="btn btn-primary" id="btnAddUser">Ajouter un utilisateur</button>
+                </div>
+
+                <div id="alert-container"></div>
+
+                <!-- Formulaire d'ajout/modification -->
+                <div id="formContainer" class="form-card" style="display: none;">
+                    <h3 id="formTitle">Ajouter un utilisateur</h3>
+                    <form id="userForm">
+                        <input type="hidden" id="oldEmail">
+
+                        <div class="form-group">
+                            <label for="username">Nom d'utilisateur *</label>
+                            <input type="text" id="username" required minlength="3" autocomplete="text">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email">Email *</label>
+                            <input type="email" id="email" required autocomplete="email">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="password">Mot de passe <span id="passwordNote">(laisser vide pour ne pas
+                                    modifier)</span></label>
+                            <input type="password" id="password" minlength="6" autocomplete="current-password">
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary">💾 Enregistrer</button>
+                            <button type="button" class="btn btn-secondary" id="btnCancelForm">❌ Annuler</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Liste des utilisateurs -->
+                <div class="table-container">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Nom d'utilisateur</th>
+                                <th>Email</th>
+                                <th>Date de création</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="usersTableBody">
+                            <tr>
+                                <td colspan="4" class="text-center">Chargement...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+    </main>
+
+    <script src="/javascripts/users.js"></script>
 </body>
 
 </html>

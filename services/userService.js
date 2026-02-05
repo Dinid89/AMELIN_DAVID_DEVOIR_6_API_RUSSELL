@@ -1,12 +1,14 @@
 const User = require('../models/User');
 
+// GET /users - Liste tous les utilisateurs
 exports.getAll = async (req, res) => {
+    console.log("💡 getAll users appelé");
     try {
-        const user = await User.find;       
+        const users = await User.find(); // pluralisé
         res.json({ 
             success: true, 
-            count: user.length,
-            data: user 
+            count: users.length,
+            data: users // bien renvoyer le tableau ici
         });
     } catch (error) {
         res.status(500).json({ 
@@ -17,9 +19,10 @@ exports.getAll = async (req, res) => {
     }
 };
 
-exports.getUserByMail = async (req, res) => {
+// GET /users/:email - Récupérer un utilisateur par email
+exports.getUserByEmail = async (req, res) => {
     try {
-        const user = await User.findOne({ email: req.params.email });
+        const user = await User.findOne({ email: req.params.email.toLowerCase() });
         if (!user) {
             return res.status(404).json({ 
                 success: false,
@@ -39,11 +42,11 @@ exports.getUserByMail = async (req, res) => {
     }
 };
 
+// POST /users - Créer un utilisateur
 exports.add = async (req, res) => {
     try {
         const { username, email, password } = req.body;
-        
-  
+
         const existingUser = await User.findOne({ email: email.toLowerCase() });
         if (existingUser) {
             return res.status(400).json({ 
@@ -51,9 +54,9 @@ exports.add = async (req, res) => {
                 message: 'Cet email est déjà utilisé' 
             });
         }
-        
-        const user = await User.create({ username, email, password });
-        
+
+        const user = await User.create({ username, email: email.toLowerCase(), password });
+
         res.status(201).json({ 
             success: true, 
             message: 'Utilisateur créé avec succès',
@@ -68,23 +71,27 @@ exports.add = async (req, res) => {
     }
 };
 
+// PUT /users/:email - Modifier un utilisateur
 exports.update = async (req, res) => {
     try {
-        const { username, email } = req.body;
-        
-        const user = await User.findByIdAndDelete(
-            req.params.id,
-            { username, email },
+        const { username, password } = req.body;
+
+        const updateData = { username };
+        if (password) updateData.password = password;
+
+        const user = await User.findOneAndUpdate(
+            { email: req.params.email.toLowerCase() }, // chercher par email
+            updateData,
             { new: true, runValidators: true }
         );
-        
+
         if (!user) {
             return res.status(404).json({ 
                 success: false, 
                 message: 'Utilisateur non trouvé' 
             });
         }
-        
+
         res.json({ 
             success: true, 
             message: 'Utilisateur modifié avec succès',
@@ -102,15 +109,15 @@ exports.update = async (req, res) => {
 
 exports.delete = async (req, res) => {
     try {
-        const user = await User.findByIdAndDelete(req.params.id);
-        
+        const user = await User.findOneAndDelete({ email: req.params.email.toLowerCase() });
+
         if (!user) {
             return res.status(404).json({ 
                 success: false, 
                 message: 'Utilisateur non trouvé' 
             });
         }
-        
+
         res.json({ 
             success: true, 
             message: 'Utilisateur supprimé avec succès' 
@@ -124,10 +131,11 @@ exports.delete = async (req, res) => {
     }
 };
 
+
 exports.authenticate = async (req, res) => {
     try {
         const { email, password } = req.body;
-        
+
         const user = await User.findOne({ email: email.toLowerCase() });
         if (!user) {
             return res.status(401).json({ 
@@ -135,7 +143,7 @@ exports.authenticate = async (req, res) => {
                 message: 'Email ou mot de passe invalide' 
             });
         }
-        
+
         const isValid = await user.comparePassword(password);
         if (!isValid) {
             return res.status(401).json({ 
@@ -143,7 +151,7 @@ exports.authenticate = async (req, res) => {
                 message: 'Email ou mot de passe invalide' 
             });
         }
-        
+
         res.json({ 
             success: true, 
             message: 'Authentification réussie',

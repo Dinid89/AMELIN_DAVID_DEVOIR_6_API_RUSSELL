@@ -1,0 +1,11 @@
+.catwaySection {
+    text-align: end;
+    padding-left: 50px;
+}
+
+.catwaySection button:hover {
+    cursor: pointer;
+}
+.catwaysTableBody {
+    text-align: center;
+}
