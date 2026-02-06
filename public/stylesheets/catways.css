@@ -1,5 +1,4 @@
 .catwaySection {
-    text-align: end;
     padding-left: 50px;
 }
 
@@ -8,4 +7,16 @@
 }
 .catwaysTableBody {
     text-align: center;
+}
+
+input {
+    width: 100%;
+}
+
+select {
+    width: 100%;
+}
+
+textarea {
+    width: 100%;
 }

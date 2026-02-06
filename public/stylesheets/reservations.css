@@ -1,3 +1,7 @@
 .section-header {
     text-align: end;
 }
+
+input {
+    width: 100%;
+}
