@@ -1,14 +1,12 @@
 const User = require('../models/User');
 
-// GET /users - Liste tous les utilisateurs
 exports.getAll = async (req, res) => {
-    console.log("💡 getAll users appelé");
     try {
-        const users = await User.find(); // pluralisé
+        const user = await User.find();       
         res.json({ 
             success: true, 
-            count: users.length,
-            data: users // bien renvoyer le tableau ici
+            count: user.length,
+            data: user 
         });
     } catch (error) {
         res.status(500).json({ 
@@ -19,10 +17,9 @@ exports.getAll = async (req, res) => {
     }
 };
 
-// GET /users/:email - Récupérer un utilisateur par email
 exports.getUserByEmail = async (req, res) => {
     try {
-        const user = await User.findOne({ email: req.params.email.toLowerCase() });
+        const user = await User.findOne({ email: req.params.email });
         if (!user) {
             return res.status(404).json({ 
                 success: false,
@@ -42,66 +39,87 @@ exports.getUserByEmail = async (req, res) => {
     }
 };
 
-// POST /users - Créer un utilisateur
 exports.add = async (req, res) => {
     try {
-        const { username, email, password } = req.body;
+        let { username, email, password } = req.body;
 
-        const existingUser = await User.findOne({ email: email.toLowerCase() });
-        if (existingUser) {
-            return res.status(400).json({ 
-                success: false, 
-                message: 'Cet email est déjà utilisé' 
+        console.log("données recues", req.body);
+
+        if (!username || !username.trim()) {
+            return res.status(400).json({
+                success: false,
+                message: "Le nom d'utilisateur est requis"
             });
         }
 
-        const user = await User.create({ username, email: email.toLowerCase(), password });
+        if (!email || !password) {
+            return res.status(400).json({
+                success: false,
+                message: "Email et mot de passe requis"
+            });
+        }
 
-        res.status(201).json({ 
-            success: true, 
-            message: 'Utilisateur créé avec succès',
-            data: user 
+        username = username.trim();
+        email = email.toLowerCase().trim();
+
+        const existingUser = await User.findOne({ email });
+        if (existingUser) {
+            return res.status(400).json({
+                success: false,
+                message: "Cet email est déjà utilisé"
+            });
+        }
+
+        const user = await User.create({ username, email, password });
+
+        res.status(201).json({
+            success: true,
+            message: "Utilisateur créé avec succès",
+            data: user
         });
     } catch (error) {
-        res.status(500).json({ 
-            success: false, 
-            message: 'Erreur lors de la création', 
-            error: error.message 
+        console.error("Erreur création user:", error);
+        res.status(500).json({
+            success: false,
+            message: "Erreur lors de la création"
         });
     }
 };
 
-// PUT /users/:email - Modifier un utilisateur
+
 exports.update = async (req, res) => {
     try {
-        const { username, password } = req.body;
+        const { username } = req.body;
 
-        const updateData = { username };
-        if (password) updateData.password = password;
+        if (!username || !username.trim()) {
+            return res.status(400).json({
+                success: false,
+                message: "Le nom d'utilisateur est requis"
+            });
+        }
 
         const user = await User.findOneAndUpdate(
-            { email: req.params.email.toLowerCase() }, // chercher par email
-            updateData,
+            { email: req.params.email },
+            { username: username.trim() },
             { new: true, runValidators: true }
         );
 
         if (!user) {
-            return res.status(404).json({ 
-                success: false, 
-                message: 'Utilisateur non trouvé' 
+            return res.status(404).json({
+                success: false,
+                message: "Utilisateur non trouvé"
             });
         }
 
-        res.json({ 
-            success: true, 
-            message: 'Utilisateur modifié avec succès',
-            data: user 
+        res.json({
+            success: true,
+            message: "Utilisateur modifié avec succès",
+            data: user
         });
     } catch (error) {
-        res.status(500).json({ 
-            success: false, 
-            message: 'Erreur lors de la modification', 
-            error: error.message 
+        res.status(500).json({
+            success: false,
+            message: "Erreur lors de la modification"
         });
     }
 };
@@ -109,24 +127,23 @@ exports.update = async (req, res) => {
 
 exports.delete = async (req, res) => {
     try {
-        const user = await User.findOneAndDelete({ email: req.params.email.toLowerCase() });
+        const user = await User.findOneAndDelete({ email: req.params.email });
 
         if (!user) {
-            return res.status(404).json({ 
-                success: false, 
-                message: 'Utilisateur non trouvé' 
+            return res.status(404).json({
+                success: false,
+                message: "Utilisateur non trouvé"
             });
         }
 
-        res.json({ 
-            success: true, 
-            message: 'Utilisateur supprimé avec succès' 
+        res.json({
+            success: true,
+            message: "Utilisateur supprimé avec succès"
         });
     } catch (error) {
-        res.status(500).json({ 
-            success: false, 
-            message: 'Erreur lors de la suppression', 
-            error: error.message 
+        res.status(500).json({
+            success: false,
+            message: "Erreur lors de la suppression"
         });
     }
 };
@@ -135,7 +152,7 @@ exports.delete = async (req, res) => {
 exports.authenticate = async (req, res) => {
     try {
         const { email, password } = req.body;
-
+        
         const user = await User.findOne({ email: email.toLowerCase() });
         if (!user) {
             return res.status(401).json({ 
@@ -143,7 +160,7 @@ exports.authenticate = async (req, res) => {
                 message: 'Email ou mot de passe invalide' 
             });
         }
-
+        
         const isValid = await user.comparePassword(password);
         if (!isValid) {
             return res.status(401).json({ 
@@ -151,7 +168,7 @@ exports.authenticate = async (req, res) => {
                 message: 'Email ou mot de passe invalide' 
             });
         }
-
+        
         res.json({ 
             success: true, 
             message: 'Authentification réussie',

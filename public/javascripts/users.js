@@ -13,9 +13,9 @@ function checkAuth() {
 }
 
 function setupEventListeners() {
-    document.getElementById('btnAddUser')?.addEventListener('click', showAddForm);
-    document.getElementById('btnCancelForm')?.addEventListener('click', hideForm);
-    document.getElementById('userForm')?.addEventListener('submit', handleSubmit);
+    document.getElementById('btnAddUser').addEventListener('click', showAddForm);
+    document.getElementById('btnCancelForm').addEventListener('click', hideForm);
+    document.getElementById('userForm').addEventListener('submit', handleSubmit);
 }
 
 function showAddForm() {
@@ -51,60 +51,31 @@ async function loadUsers() {
 
     try {
         const response = await fetch('/api/users', {
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
+            headers: { 'Authorization': `Bearer ${token}` }
         });
 
         const data = await response.json();
 
-        console.log('Status HTTP:', response.status);
-        console.log('Réponse API users:', data);
-
-        if (!data.success || !Array.isArray(data.data)) {
-            tbody.innerHTML = `
-                <tr>
-                    <td colspan="4" class="text-center text-danger">
-                        Erreur de chargement des utilisateurs
-                    </td>
-                </tr>`;
-            return;
-        }
+        if (!data.success) throw new Error('Erreur chargement');
 
         if (data.data.length === 0) {
-            tbody.innerHTML = `
+            tbody.innerHTML = '<tr><td colspan="4" class="text-center">Aucun utilisateur</td></tr>';
+        } else {
+            tbody.innerHTML = data.data.map(user => `
                 <tr>
-                    <td colspan="4" class="text-center">
-                        Aucun utilisateur
+                    <td>${user.username}</td>
+                    <td>${user.email}</td>
+                    <td>${new Date(user.createdAt).toLocaleDateString('fr-FR')}</td>
+                    <td>
+                        <button class="btn btn-sm btn-edit" onclick="editUser('${user.email}')">✏️ Modifier</button>
+                        <button class="btn btn-sm btn-delete" onclick="deleteUser('${user.email}')">🗑️ Supprimer</button>
                     </td>
-                </tr>`;
-            return;
+                </tr>
+            `).join('');
         }
-
-        tbody.innerHTML = data.data.map(user => `
-            <tr>
-                <td>${user.username}</td>
-                <td>${user.email}</td>
-                <td>${new Date(user.createdAt).toLocaleDateString('fr-FR')}</td>
-                <td>
-                    <button class="btn btn-sm btn-edit" onclick="editUser('${user.email}')">
-                        ✏️ Modifier
-                    </button>
-                    <button class="btn btn-sm btn-delete" onclick="deleteUser('${user.email}')">
-                        🗑️ Supprimer
-                    </button>
-                </td>
-            </tr>
-        `).join('');
-
     } catch (error) {
-        console.error('Erreur loadUsers:', error);
-        tbody.innerHTML = `
-            <tr>
-                <td colspan="4" class="text-center text-danger">
-                    Erreur de chargement
-                </td>
-            </tr>`;
+        tbody.innerHTML = '<tr><td colspan="4" class="text-center text-danger">Erreur de chargement</td></tr>';
+        console.error('Erreur:', error);
     }
 }
 
@@ -117,24 +88,30 @@ async function handleSubmit(e) {
     const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;
 
+    console.log('Valeurs du formulaire:', { username, email, password });
+
     const body = { username, email };
-    if (password) body.password = password;
-
-    let url, method;
-
-    if (oldEmail) {
-        url = `/api/users/${oldEmail}`;
-        method = 'PATCH'; 
-    } else {
-        url = '/api/users/add';
-        method = 'POST';
+    if (password) {
+        body.password = password;
     }
 
     try {
+        let url, method;
+        
+        if (oldEmail) {
+            // Modification
+            url = `/api/users/${oldEmail}`;
+            method = 'PUT';
+        } else {
+            // Création
+            url = '/api/users';
+            method = 'POST';
+        }
+
         const response = await fetch(url, {
             method,
             headers: {
-                Authorization: `Bearer ${token}`,
+                'Authorization': `Bearer ${token}`,
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(body)
@@ -147,11 +124,11 @@ async function handleSubmit(e) {
             hideForm();
             loadUsers();
         } else {
-            showAlert('danger', data.message || 'Erreur');
+            showAlert('danger', data.message);
         }
     } catch (error) {
-        console.error('Erreur submit:', error);
-        showAlert('danger', 'Erreur lors de l’enregistrement');
+        showAlert('danger', 'Erreur lors de l\'enregistrement');
+        console.error('Erreur:', error);
     }
 }
 
@@ -160,20 +137,15 @@ async function editUser(email) {
 
     try {
         const response = await fetch(`/api/users/${email}`, {
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
+            headers: { 'Authorization': `Bearer ${token}` }
         });
 
         const data = await response.json();
 
-        if (data.success && data.data) {
+        if (data.success) {
             showEditForm(data.data);
-        } else {
-            showAlert('danger', 'Utilisateur introuvable');
         }
     } catch (error) {
-        console.error('Erreur editUser:', error);
         showAlert('danger', 'Erreur lors du chargement');
     }
 }
@@ -186,9 +158,7 @@ async function deleteUser(email) {
     try {
         const response = await fetch(`/api/users/${email}`, {
             method: 'DELETE',
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
+            headers: { 'Authorization': `Bearer ${token}` }
         });
 
         const data = await response.json();
@@ -197,10 +167,9 @@ async function deleteUser(email) {
             showAlert('success', data.message);
             loadUsers();
         } else {
-            showAlert('danger', data.message || 'Erreur');
+            showAlert('danger', data.message);
         }
     } catch (error) {
-        console.error('Erreur deleteUser:', error);
         showAlert('danger', 'Erreur lors de la suppression');
     }
 }
@@ -225,5 +194,4 @@ function setupLogout() {
         });
     }
 }
-
 
