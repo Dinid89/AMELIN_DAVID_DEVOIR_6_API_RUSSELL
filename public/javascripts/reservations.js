@@ -121,8 +121,8 @@ async function loadReservations() {
                         <td>${new Date(res.endDate).toLocaleDateString('fr-FR')}</td>
                         <td><span class="badge ${badgeClass}">${status}</span></td>
                         <td>
-                            <button class="btn btn-sm btn-edit" onclick="editReservation('${res.catwayNumber}', '${res._id}')">✏️</button>
-                            <button class="btn btn-sm btn-delete" onclick="deleteReservation('${res.catwayNumber}', '${res._id}')">🗑️</button>
+                            <button class="btn btn-sm btn-edit" onclick="editReservation('${res.catwayNumber}', '${res._id}')">✏️ Modifier</button>
+                            <button class="btn btn-sm btn-delete" onclick="deleteReservation('${res.catwayNumber}', '${res._id}')">🗑️ Supprimer</button>
                         </td>
                     </tr>
                 `;
