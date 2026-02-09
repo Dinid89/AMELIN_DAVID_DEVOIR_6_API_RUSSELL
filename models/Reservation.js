@@ -2,10 +2,10 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const reservationSchema = new mongoose.Schema({
-    catawayNumber: {
+    catwayNumber: {
         type : Number,
         trim : true,
-        required : [true, "Le numéro de cataway est requis"]
+        required : [true, "Le numéro de catway est requis"]
     },
 
     clientName: {

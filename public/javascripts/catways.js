@@ -24,6 +24,7 @@ function showAddForm() {
     document.getElementById('catwayId').value = '';
     document.getElementById('formContainer').style.display = 'block';
     document.getElementById('catwayNumber').disabled = false;
+    document.getElementById("catwayType").disabled = false;
 }
 
 function showEditForm(catway) {

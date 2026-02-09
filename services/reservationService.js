@@ -68,6 +68,8 @@ exports.add = async (req, res) => {
     try {
         const catwayNumber = parseInt(req.params.id);
         const { clientName, boatName, startDate, endDate } = req.body;
+
+        console.log('Données reçues pour réservation:', { catwayNumber, clientName, boatName, startDate, endDate });
         
         // Vérifier que le catway existe
         const catway = await Catway.findOne({ catwayNumber });
@@ -100,6 +102,8 @@ exports.add = async (req, res) => {
             startDate, 
             endDate 
         });
+
+        console.log('Réservation créée:', reservation);
         
         res.status(201).json({
             success: true,
@@ -107,6 +111,7 @@ exports.add = async (req, res) => {
             data: reservation
         });
     } catch (error) {
+        console.error('Erreur création réservation:', error);
         res.status(500).json({
             success: false,
             message: 'Erreur lors de la création',

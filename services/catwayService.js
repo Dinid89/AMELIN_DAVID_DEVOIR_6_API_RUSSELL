@@ -2,7 +2,7 @@ const Catway = require('../models/Catway');
 
 exports.getAll = async (req, res) => {
     try {
-        const catways = await Catway.find();
+        const catways = await Catway.find().sort({ catwayNumber: 1});
         res.json({ 
             success: true, 
             count: catways.length,
