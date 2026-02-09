@@ -1,5 +1,6 @@
 const Catway = require('../models/Catway');
 
+//recuperation des catways
 exports.getAll = async (req, res) => {
     try {
         const catways = await Catway.find().sort({ catwayNumber: 1});
@@ -41,7 +42,7 @@ exports.getById = async (req, res) => {
     }
 };
 
-
+//ajouter un catway
 exports.add = async (req, res) => {
     try {
         const { catwayNumber, catwayType, catwayState } = req.body;
@@ -71,6 +72,7 @@ exports.add = async (req, res) => {
     }
 };
 
+//modifier un catway
 exports.update = async (req, res) => {
     try {
         const { catwayState } = req.body;
@@ -103,7 +105,7 @@ exports.update = async (req, res) => {
     }
 };
 
-
+//supprimer un catway
 exports.delete = async (req, res) => {
     try {
         const catway = await Catway.findOneAndDelete({ catwayNumber: req.params.id });

@@ -1,8 +1,7 @@
-// services/reservationService.js
 const Reservation = require('../models/Reservation');
 const Catway = require('../models/Catway');
 
-// GET /catways/:id/reservations - Liste toutes les réservations d'un catway
+//lister des reservations
 exports.getAllByCatway = async (req, res) => {
     try {
         const catwayNumber = parseInt(req.params.id);
@@ -32,7 +31,7 @@ exports.getAllByCatway = async (req, res) => {
     }
 };
 
-// GET /catways/:id/reservations/:idReservation - Récupérer une réservation spécifique
+//recuperation des reservations
 exports.getById = async (req, res) => {
     try {
         const catwayNumber = parseInt(req.params.id);
@@ -63,7 +62,7 @@ exports.getById = async (req, res) => {
     }
 };
 
-// POST /catways/:id/reservations - Créer une réservation
+//créer une réservations
 exports.add = async (req, res) => {
     try {
         const catwayNumber = parseInt(req.params.id);
@@ -120,7 +119,7 @@ exports.add = async (req, res) => {
     }
 };
 
-// PUT /catways/:id/reservations/:idReservation - Modifier une réservation
+//modifier une réservations
 exports.update = async (req, res) => {
     try {
         const catwayNumber = parseInt(req.params.id);
@@ -154,7 +153,7 @@ exports.update = async (req, res) => {
     }
 };
 
-// DELETE /catways/:id/reservations/:idReservation - Supprimer une réservation
+//supprimer une réservations
 exports.delete = async (req, res) => {
     try {
         const catwayNumber = parseInt(req.params.id);

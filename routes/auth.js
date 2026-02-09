@@ -5,6 +5,37 @@ const User = require('../models/User');
 
 const SECRET_KEY = process.env.SECRET_KEY
 
+/**
+ * @swagger
+ * /api/login:
+ *   post:
+ *     summary: Connexion administrateur
+ *     tags: [Auth]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - email
+ *               - password
+ *             properties:
+ *               email:
+ *                 type: string
+ *                 example: admin@russell.com
+ *               password:
+ *                 type: string
+ *                 example: Admin1234
+ *     responses:
+ *       200:
+ *         description: Connexion réussie
+ *       401:
+ *         description: Identifiants invalides
+ */
+
+
+
 router.post('/login', async (req, res) => {  
     try {
         const { email, password }  = req.body;

@@ -1,5 +1,6 @@
 const User = require('../models/User');
 
+//lister des utilisateurs admin
 exports.getAll = async (req, res) => {
     try {
         const user = await User.find();       
@@ -39,6 +40,7 @@ exports.getUserByEmail = async (req, res) => {
     }
 };
 
+//ajouter un utilisateur
 exports.add = async (req, res) => {
     try {
         let { username, email, password } = req.body;
@@ -86,7 +88,7 @@ exports.add = async (req, res) => {
     }
 };
 
-
+//modifier un utilisateur
 exports.update = async (req, res) => {
     try {
         const { username } = req.body;
@@ -124,7 +126,7 @@ exports.update = async (req, res) => {
     }
 };
 
-
+//supprimer un utilisaeur
 exports.delete = async (req, res) => {
     try {
         const user = await User.findOneAndDelete({ email: req.params.email });

@@ -18,6 +18,7 @@ function setupEventListeners() {
     document.getElementById('userForm').addEventListener('submit', handleSubmit);
 }
 
+//ajouter un utilisateur
 function showAddForm() {
     document.getElementById('formTitle').textContent = 'Ajouter un utilisateur';
     document.getElementById('userForm').reset();
@@ -28,6 +29,7 @@ function showAddForm() {
     document.getElementById('formContainer').style.display = 'block';
 }
 
+//modifier un utilisateur
 function showEditForm(user) {
     document.getElementById('formTitle').textContent = 'Modifier un utilisateur';
     document.getElementById('oldEmail').value = user.email;

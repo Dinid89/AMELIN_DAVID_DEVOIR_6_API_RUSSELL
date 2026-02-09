@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
 
+//Schema pour un catway :  numero, type, état
+
 const catwaySchema = new mongoose.Schema({
     catwayNumber: {
         type : Number,

@@ -1,4 +1,3 @@
-// dashboard.js
 document.addEventListener('DOMContentLoaded', () => {
     checkAuth();
     loadUserInfo();
@@ -32,10 +31,10 @@ async function loadCurrentReservations() {
         }
 
         const today = new Date();
-        today.setHours(0,0,0,0); // Ignorer heures, minutes, secondes
+        today.setHours(0,0,0,0);
         let allReservations = [];
 
-        // Parcours des catways
+       
         for (const catway of data.data) {
             const resResponse = await fetch(`/api/catways/${catway.catwayNumber}/reservations`, {
                 headers: {
@@ -59,7 +58,6 @@ async function loadCurrentReservations() {
             }
         }
 
-        // Mettre à jour le compteur
         document.getElementById('activeReservationsCount').textContent = allReservations.length;
 
         // Afficher les réservations

@@ -1,6 +1,11 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 
+//utilisateurs confirmés pour se connecter à l'API
+//mail, mot de passe
+// mail unique
+//mot de passe à 6 caractere minimum
+
 const userSchema = new mongoose.Schema({
   username: {
     type: String,

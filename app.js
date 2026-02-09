@@ -4,6 +4,8 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const cors = require('cors');
+const swaggerUi = require('swagger-ui-express');
+const swaggerSpec = require('./swagger');
 
 const usersRouter = require('./routes/users');
 const catwayRouter = require('./routes/catway');
@@ -34,6 +36,8 @@ app.use('/api', authRouter);
 app.use('/api/users', usersRouter);
 app.use('/api/catways', catwayRouter);
 
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+
 // Routes des pages EJS
 app.get('/', (req, res) => {
     res.render('index', { title: 'Connexion - Port de Plaisance Russell' });
@@ -59,9 +63,11 @@ app.get('/documentation', (req, res) => {
     res.render('documentation', { title: 'Documentation API' });
 });
 
+
 // 404
 app.use(function(req, res) {
     res.status(404).json({ name: "API Russell Marina", version: "1.0.0", message: "Endpoint not found" });
 });
+
 
 module.exports = app;

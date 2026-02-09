@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
+// réservation type : numero, nom du client, nom du bateau, date de début et date de fin
+
 const reservationSchema = new mongoose.Schema({
     catwayNumber: {
         type : Number,

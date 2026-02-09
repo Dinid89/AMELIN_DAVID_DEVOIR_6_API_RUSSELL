@@ -18,7 +18,7 @@ function setupEventListeners() {
     document.getElementById('catwayForm').addEventListener('submit', handleSubmit);
 }
 
-function showAddForm() {
+function showAddForm() { //ajout d'un catway
     document.getElementById('formTitle').textContent = 'Ajouter un catway';
     document.getElementById('catwayForm').reset();
     document.getElementById('catwayId').value = '';
@@ -27,7 +27,7 @@ function showAddForm() {
     document.getElementById("catwayType").disabled = false;
 }
 
-function showEditForm(catway) {
+function showEditForm(catway) { //mofication d'un catway
     document.getElementById('formTitle').textContent = 'Modifier un catway';
     document.getElementById('catwayId').value = catway.catwayNumber;
     document.getElementById('catwayNumber').value = catway.catwayNumber;

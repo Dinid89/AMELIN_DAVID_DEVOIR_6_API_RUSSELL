@@ -19,7 +19,8 @@ function setupEventListeners() {
     document.getElementById('reservationForm').addEventListener('submit', handleSubmit);
 }
 
-function showAddForm() {
+//ajouter une reservation
+function showAddForm() { 
     document.getElementById('formTitle').textContent = 'Ajouter une réservation';
     document.getElementById('reservationForm').reset();
     document.getElementById('reservationId').value = '';
@@ -28,7 +29,8 @@ function showAddForm() {
     document.getElementById('formContainer').style.display = 'block';
 }
 
-function showEditForm(reservation) {
+//modifier une reservation
+function showEditForm(reservation) { 
     document.getElementById('formTitle').textContent = 'Modifier une réservation';
     document.getElementById('reservationId').value = reservation._id;
     document.getElementById('oldCatwayNumber').value = reservation.catwayNumber;
